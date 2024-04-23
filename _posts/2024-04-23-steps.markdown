@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "Uploading Container Images to Docker Hub"
+title:  "Building a Multi-Container Application with Docker Compose"
 date:   2024-04-23 09:15:23 +0530
 categories: jekyll update
 ---
-In today's tech world, containerization has become a key component of modern software development and deployment. Docker, one of the leading containerization platforms, provides a convenient way to package applications and their dependencies into lightweight containers. Docker Hub, on the other hand, is a cloud-based registry service that allows users to store and distribute Docker images.
+In this tutorial, we'll walk through the process of building a multi-container application using Docker Compose. We'll create a simple web application with both frontend and backend components, each running in its own Docker container. By using Docker Compose, we can define and manage the multi-container setup with ease.
 
 
 **Prerequisites**
@@ -14,64 +14,80 @@ Before getting started, ensure you have the following:
 -Docker installed on your local machine
 -A Docker Hub account
 
-**Step 1: Build Your Docker Image**
+**Step 1: Setting up the Project**
 
 First, you'll need to build the Docker image you want to upload. This typically involves creating a **Dockerfile** that specifies the configuration for your image and then using the **docker build** command to build it.
 
 Here's an example **Dockerfile** for a simple Node.js application:
 
-{% highlight Dockerfile %}
-# Use the official Node.js image as a base
-FROM node:14
+{% highlight bash %}
 
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code to the working directory
-COPY . .
-
-# Expose port 3000
-EXPOSE 3000
-
-# Command to run the application
-CMD ["npm", "start"]
-{% endhighlight %}
-
-Navigate to the directory containing your Dockerfile and run the following command to build the Docker image:
+mkdir multi-container-app
+cd multi-container-app
 
 {% highlight Dockerfile %}
 docker build -t kirtan2604/ia2-image:tag .
 {% endhighlight %}
 
-**Step 2: Log in to Docker Hub**
+**Step 2:  Creating the Frontend Container**
 
-Before you can push your image to Docker Hub, you need to log in to your Docker Hub account from the command line. Run the following command and enter your Docker Hub credentials when prompted:
+We'll start by creating the frontend container using the httpd image. Create a file named docker-compose.yml in your project directory and add the following content:
 
-{% highlight Dockerfile %}
-docker login
+{% highlight yaml %}
+version: "3"
+services:
+  frontend:
+    image: httpd:latest
+    volumes:
+      - "./frontend:/usr/local/apache2/htdocs"
+    ports:
+      - "3000:80"
 {% endhighlight %}
 
-**Step 3: Tag Your Image**
+**Step 3: Setting Up the Backend Container**
 
-Next, you'll need to tag your Docker image with the appropriate repository name and version. Use the following command to tag your image:
-
-{% highlight Dockerfile %}
-docker tag kirtan2604/ia2-image:tag kirtan2604/ia2-image:new-tag
-{% endhighlight %}
-
-**Step 4: Push Your Image to Docker Hub**
-
-Finally, you're ready to push your Docker image to Docker Hub. Use the following command to push the image:
+Next, let's define the backend container. Create a Dockerfile in your project directory with the following content:
 
 {% highlight Dockerfile %}
-docker push kirtan2604/ia2-image:new-tag
+FROM php:7.4-apache
+COPY ./api /var/www/html/
 {% endhighlight %}
 
-This command will upload the tagged image to your Docker Hub repository. Once the upload is complete, your image will be available for use by others.
+Now, update your docker-compose.yml file to include the backend service:
+
+{% highlight Dockerfile %}
+version: "3"
+services:
+  frontend:
+    image: httpd:latest
+    volumes:
+      - "./frontend:/usr/local/apache2/htdocs"
+    ports:
+      - "3000:80"
+
+  backend:
+    container_name: simple-backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - "./api:/var/www/html/"
+    ports:
+      - "5000:80"
+
+{% endhighlight %}
+
+**Step 4: Running the Application**
+
+To start the application, run the following command in your project directory:
+
+{% highlight Dockerfile %}
+docker-compose up
+{% endhighlight %}
+
+This command will build and start both the frontend and backend containers as defined in the docker-compose.yml file.
+
+**Conclusion**
+
+In this tutorial, we've learned how to build a multi-container application using Docker Compose. By defining our application's services in a docker-compose.yml file, we can easily manage the setup and deployment of our containers. This approach allows for efficient development and deployment of complex applications with multiple components.
 

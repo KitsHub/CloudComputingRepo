@@ -9,10 +9,10 @@ In this tutorial, we'll walk through the process of building a multi-container a
 
 **Prerequisites**
 
-Before getting started, ensure you have the following:
+Before proceeding with this tutorial, please ensure that you have met the following prerequisites:
 
--Docker installed on your local machine
--A Docker Hub account
+-An active Internet connection: You will need a reliable Internet connection to access the necessary resources and documentation throughout the tutorial.
+-Docker installation: Make sure that Docker is installed on your machine. Docker enables the creation and management of containers, which is crucial for following along with the tutorial. You can follow the below instructions to install it.
 
 **Step 1: Setting up the Project**
 
@@ -24,10 +24,8 @@ Here's an example **Dockerfile** for a simple Node.js application:
 
 mkdir multi-container-app
 cd multi-container-app
-
-{% highlight Dockerfile %}
-docker build -t kirtan2604/ia2-image:tag .
 {% endhighlight %}
+
 
 **Step 2:  Creating the Frontend Container**
 
@@ -91,3 +89,4 @@ This command will build and start both the frontend and backend containers as de
 
 In this tutorial, we've learned how to build a multi-container application using Docker Compose. By defining our application's services in a docker-compose.yml file, we can easily manage the setup and deployment of our containers. This approach allows for efficient development and deployment of complex applications with multiple components.
 
+![Image Alt Text](/assets/images/final_website.png)

@@ -85,8 +85,37 @@ docker-compose up
 
 This command will build and start both the frontend and backend containers as defined in the docker-compose.yml file.
 
+**Screenshot of final website**
+
+![Image Alt Text](/assets/images/final_website.png)
+
+**Screenshots of all thefiles**
+
+-file structure
+![Image Alt Text](/assets/images/file_structure.png)
+
+-docker-compose.yml file
+![Image Alt Text](/assets/images/docker-compose1.png)
+![Image Alt Text](/assets/images/docker-compose2.png)
+
+-dockerfile
+![Image Alt Text](/assets/images/Dockerfile1.png)
+![Image Alt Text](/assets/images/Dockerfile2.png)
+
+-index.html
+![Image Alt Text](/assets/images/html_index.png)
+
+-index.php
+![Image Alt Text](/assets/images/php_index.png)
+
+-todos.php , database.php, dump.sql
+![Image Alt Text](/assets/images/php_todo.png)
+![Image Alt Text](/assets/images/php_database_con.png)
+![Image Alt Text](/assets/images/sql_dump.png)
+
+
 **Conclusion**
 
 In this tutorial, we've learned how to build a multi-container application using Docker Compose. By defining our application's services in a docker-compose.yml file, we can easily manage the setup and deployment of our containers. This approach allows for efficient development and deployment of complex applications with multiple components.
 
-![Image Alt Text](/assets/images/final_website.png)
+
